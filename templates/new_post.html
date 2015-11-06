@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load bootstrap_tags %}
+{% block pageTitle %}<title>發布{{ form_type_text }}信息</title>{% endblock %}
+{% block content %}
+<br>
+<div class="container">
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+	<div class="form-box">
+	<h2>發布{{ form_type_text }}信息</h2>
+	<p>請注意<span class="highlight-orange">必填</span>項。其餘項請盡量詳細，可提高信息能見度，方便他人與你聯系。</p>
+	<hr>
+	<form action="" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+    	{{ form|as_bootstrap }}
+		<p><button type="submit" class="btn btn-primary">發布</button>&nbsp;&nbsp;<a href="/{{ request.session.cityslug }}/post/" class="btn btn-default">取消</a></p>
+		<p>發布即代表您已閱讀並同意我們的<a href="/terms" target="_blank">服務條款</a></p>
+	</form>
+	</div>
+</div>
+</div>
+</div>
+{% endblock %}

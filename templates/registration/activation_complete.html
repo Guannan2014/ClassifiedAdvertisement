@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block pageTitle %}<title>账户验证成功</title>{% endblock %}
+{% block content %}
+<br>
+<div class="container">
+<div class="row">
+<div class="col-sm-6 col-sm-offset-3">
+<div class="alert alert-success"><strong>成功激活！</strong>您的賬戶已經通過驗證，現在可以<a href="{% url 'django.contrib.auth.views.login' %}" class="alert-link">登入</a>。</div>
+</div>
+</div>
+</div>
+{% endblock %}

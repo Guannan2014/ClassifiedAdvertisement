@@ -1,0 +1,73 @@
+body { 
+  padding-top: 50;
+  background-color: #e4e4e4;
+}
+.row [class*="col-"] {
+  border: none;
+  margin-bottom: 30px;
+}
+
+.city-box {
+  font-family: 'Vollkorn', serif;
+  font-size: 2.2em;
+  text-align: center;
+  margin: 20px;
+}
+.city-box-coming-soon {
+  font-family: 'Vollkorn', serif;
+  font-size: 2.2em;
+  text-align: center;
+  margin: 20px;
+  color: #aaa;
+}
+.city-box-select-city {
+  font-family: 'Vollkorn', serif;
+  font-size: 2.2em;
+  text-align: center;
+  margin: 20px;
+  color: #aaa;
+}
+.city-box > a,
+.city-box > a:link,
+.city-box > a:visited {
+  color: #666;
+  display: block;
+  text-decoration: none;
+}
+.city-box > a:hover,
+.city-box > a:active,
+.city-box > a:focus {
+  color: #101010;
+  background-color: #f0f0f0;
+  text-decoration: none;
+}
+
+.navbar-default {
+  background-color: #fff;
+}
+.footer {
+  color: #888;
+}
+.footer > a:link,
+.footer > a:visited {
+  color: #888;
+  text-decoration: none;
+}
+.footer > a:hover,
+.footer > a:active {
+  color: #333;
+  text-decoration: none;
+}
+
+.brand-highlight {
+  color: #f9b633;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+hr.faint {
+  border: 0; 
+  border-top: 1px dashed #bbb;
+}

@@ -1,0 +1,31 @@
+{% extends "staticpages/staticbase.html" %}
+{% block pageTitle %}<title>信息推廣</title>{% endblock %}
+{% block static_content %}
+<h1>信息推廣</h1>
+<hr>
+<h4>發布普通信息是<span class="highlight">免費</span>的，但如果您想宣傳推廣您的信息，可以通過以下步驟來實現：</h4>
+<h2><span class="label label-peach">加急信息</span></h2>
+<br>
+<h4>加急後：</h4>
+<ul>
+<li>信息分類頁面置頂</li>
+<li>顯眼紅色標識</li>
+<li>最大能見度</li>
+</ul>
+<br>
+<p>您可以選擇以下方式直接付款。付款時請注明您的信息鏈接網址，或信息編號，例如RTP20，在信息標題下方可以找到。付款遇到問題，<a href="/contact">請聯系我們</a>。</p>
+<div class="row">
+	<div class="col-xs-12 text-center"><b>PayPal</b><br>支持多國信用卡、銀聯卡<br>
+	<h3 class="text-center"><span class="label label-peach">每條每周$10美元</span></h3>
+	<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+	<input type="hidden" name="cmd" value="_s-xclick">
+	<input type="hidden" name="hosted_button_id" value="NV4T23CWUKYQE">
+	<input type="image" src="https://www.paypalobjects.com/zh_XC/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal——最安全便捷的在线支付方式！">
+	<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+	</form>
+	</div>
+</div>
+<hr>
+<h3>其他廣告推廣方式，<a href="/contact">請聯系我們</a>。</h3>
+
+{% endblock %}

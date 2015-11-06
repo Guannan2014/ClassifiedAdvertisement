@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block pageTitle %}<title>注册新账户</title>{% endblock %}
+{% load i18n %}
+{% load bootstrap_tags %}
+{% block content %}
+<br>
+<div class="container">
+<div class="row">
+<div class="col-sm-6 col-sm-offset-3 form-box">
+<h3>注冊新賬戶</h3>
+<hr>
+<form action="/accounts/register/" method="POST">{% csrf_token %}
+{{ form|as_bootstrap }}
+<button type="submit" class="btn btn-primary">注冊</button>&nbsp;<a href="/accounts/login/" class="btn btn-default" role="button">取消</a>
+</form>
+{% if form.errors %}
+<br>
+<div class="alert alert-warning">
+郵箱地址已有人使用？您是否忘記賬戶密碼？嘗試<a href="{% url 'django.contrib.auth.views.login' %}" class="alert-link">登入</a>或者<a href="{% url 'django.contrib.auth.views.password_reset' %}" class="alert-link">重新設置密碼</a>。
+</div>
+{% endif %}
+</div>
+</div>
+</div>
+{% endblock %}

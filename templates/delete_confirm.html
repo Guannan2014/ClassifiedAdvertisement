@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block pageTitle %}<title>確認刪除信息</title>{% endblock %}
+{% block content %}
+<br>
+<div class="container">
+<div class="row">
+<div class="col-sm-6 col-sm-offset-3">
+<div class="alert alert-danger">確認要刪除<strong>{{ post_deleted.title }}?</strong><br><br>刪除之後，此信息將無法還原。</div>
+<form action="" method="post">
+{% csrf_token %}
+<button type="submit" class="btn btn-danger">刪除</button>&nbsp;<a href="/accounts/mp" class="btn btn-default" role="button">取消</a>
+</form>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

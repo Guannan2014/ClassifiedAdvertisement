@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block pageTitle %}<title>验证码无效</title>{% endblock %}
+{% block content %}
+<br>
+<div class="container">
+<div class="row">
+<div class="col-sm-6 col-sm-offset-3">
+<div class="alert alert-danger">
+<h3>驗證碼{{ activation_key }}無效!</h3>
+</div>
+<div class="alert alert-info">
+有疑問？<a href="#" class="alert-link">請聯系我們</a>。
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

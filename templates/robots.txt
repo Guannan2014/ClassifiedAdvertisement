@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /
+Disallow: /accounts/
+Disallow: /*.gif$
+Disallow: /*.jpg$
+Disallow: /*.png$
+Disallow: /*.bmp$
+Disallow: /*post/

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block pageTitle %}<title>管理信息</title>{% endblock %}
+{% block content %}
+<br>
+<div class="container">
+<div class="row">
+<div class="col-sm-8 col-sm-offset-2 form-box">
+<h1>管理信息：</h1>
+<h4>信息總數<span class="highlight">{{ num_posts }}</span></h4>
+<hr>
+{% if not users_posts %}<div class="alert alert-info text-center alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>在此頁面可瀏覽、修改或刪除您之前所發布的所有信息。您目前還沒有發布的信息。</div>{% endif %}
+
+{% for p in users_posts %}
+<h3><a href="/{{ p.city.slug }}/{{ p.cat.slug }}/{{ p.id }}" target="_blank">{{ p.title }}</a></h3>
+<a href="/accounts/ep/{{ p.cat.slug }}/{{ p.id }}">修改</a>&nbsp;|&nbsp;<a href="/accounts/dp/{{ p.cat.slug }}/{{ p.id }}">刪除</a><br>編號:&nbsp;{% if p.cat.id == 1 %}RTP{% endif %}{% if p.cat.id == 3 %}SLP{% endif %}{{ p.id }}<br>發布時間:{{ p.created|date:"Y-m-d H:i e" }}<br>上次修改:{{ p.modified|date:"Y-m-d H:i e" }}{% if not forloop.last %}<hr>{% endif %}
+{% endfor %}
+</div>
+</div>
+</div>
+{% endblock %}

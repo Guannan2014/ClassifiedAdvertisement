@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% block pageTitle %}{% endblock %}
+  {% block metatags %}{% endblock %}
+  <meta charset="utf-8">
+  <meta name="robots" content="noimageindex">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="https://s3.amazonaws.com/zgss/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="https://s3.amazonaws.com/zgss/images/favicon.ico" type="image/x-icon">
+  <!-- Bootstrap CDN -->
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+  <!-- self customized stylesheet -->
+  <link href="/static/css/listcities.css" rel="stylesheet">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46518405-1', '900hl.com');
+  ga('send', 'pageview');
+
+  </script>
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarcollapse1">
+          <span class="sr-only">導航</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="./" class="navbar-brand"><span class="brand-highlight">900</span>海里</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="navbarcollapse1">
+        {% if request.session.cityslug %}
+        <ul class="nav navbar-nav">
+          <li{% if "/r/" in request.path %} class="active"{% endif %}><a href="/{{ request.session.cityslug }}/r">租房</a></li>
+          <li{% if "/s/" in request.path %} class="active"{% endif %}><a href="/{{ request.session.cityslug }}/s">集市</a></li>
+          <li{% if "/post/" in request.path %} class="active"><a href="#">{% else %}><a href="/{{ request.session.cityslug }}/post">{% endif %}<i class="fa fa-pencil-square-o" rel="nofollow"></i>&nbsp;發信息</a></li>
+        </ul>
+        {% endif %}
+        <ul class="nav navbar-nav navbar-right">
+          {% if user.is_authenticated %}
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }}<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/accounts/mp" rel="nofollow"><i class="fa fa-cog"></i> 管理信息</a></li>
+                <li><a href="{% url 'django.contrib.auth.views.logout' %}?next={{ request.path }}" rel="nofollow"><i class="fa fa-sign-out"></i> 退出</a></li>
+              </ul>
+          </li>
+          {% else %}
+          {% if '/login/' not in request.path %}<li><a href="{% url 'django.contrib.auth.views.login' %}?next={{ request.path }}" rel="nofollow">{% else %}<li class="active"><a href="#" rel="nofollow">{% endif %}<i class="fa fa-sign-in"></i> 登入</a></li>
+          {% endif %}
+          <li><a href="#" id="translateLink" rel="nofollow">简体</a></li>
+          <li><a href="/cities/"><i class="fa fa-globe"></i>&nbsp;選城市</a></li>
+          {% if request.session.cityslug %}
+          <li><a href="/{{ request.session.cityslug }}"><span class="label label-primary">現在：{{ request.session.usercity }}</span></a></li>
+          {% endif %}
+        </ul>
+      </div><!-- /.navbar-collapse -->
+  </nav>
+  
+{% block content %}{% endblock %}
+<br>
+<br>
+<div class="container">
+<div class="row">
+<div class="col-md-8 col-md-offset-2 text-center">
+<hr class="above-footer">
+<div class="footer">
+  &copy;&nbsp;{% now "Y" %}&nbsp;<a href="/" target="_blank">900海里</a>&nbsp;-&nbsp;<a href="/upgrade" target="_blank">信息推廣</a>&nbsp;-&nbsp;<a href="/contact" target="_blank">聯系幫助</a>&nbsp;-&nbsp;<a href="/terms" target="_blank">服務條款</a>&nbsp;-&nbsp;<a href="/privacy" target="_blank">隱私政策</a>&nbsp;-&nbsp;<a href="/safety" target="_blank">安全提醒</a>&nbsp;-&nbsp;<a href="http://weibo.com/900haili" target="_blank">官方微博</a>&nbsp;-&nbsp;<a href="/about" target="_blank">關於我們</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/tw_cn.js"></script>
+<script type="text/javascript">
+var defaultEncoding = 2;
+var translateDelay = 0;
+var cookieDomain = "";
+var msgToTraditionalChinese = "繁體";
+var msgToSimplifiedChinese = "简体";
+var translateButtonId = "translateLink";
+translateInitilization();
+</script>
+<script src="/static/js/custom.js"></script>
+</body>
+</html>

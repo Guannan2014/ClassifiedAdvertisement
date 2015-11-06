@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+{% block pageTitle %}<title>900海里 - {{ place.name_eng }}{{ place.name_gbk }}华人生活信息网</title>{% endblock %}
+{% block metatags %}
+<meta name="description" content="900海里{{ place.name_eng }}{{ place.name_gbk }}华人生活信息网。搜索{{ place.name_gbk }}租房、物品交易信息。免费发布信息。" />
+<meta name="keywords" content="{{ place.name_eng }}华人, {{ place.name_gbk}}华人, {{ place.name_gbk }}租房, 华人租房, {{ place.name_gbk}}二手货, {{ place.name_gbk}}物品交易" />
+<meta name="author" content="900海里" />
+{% endblock %}
+{% block content %}
+<br>
+<div class="container">
+<div class="row">
+	<div class="col-xs-12">
+	<h1><span class="label label-most-recent">{% if category.slug == 'r' %}租房{% else %}集市{% endif %}</span><span></span></h1>
+	</div>
+</div>
+<div class="row" id="searchForm">
+<div class="col-xs-12">
+<div class="search-box">
+	<form class="form-inline" role="form" method="GET" action="">
+		<div class="form-group">
+          <select class="form-control" name="sort">
+            <option value="newest"{% if sort == 'newest' or not sort %} selected{% endif %}>最新發布</option>
+            <option value="cheapest"{% if sort == 'cheapest' %} selected{% endif %}>最便宜</option>
+            <option value="expensive"{% if sort == 'expensive' %} selected{% endif %}>最貴</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="form-control" name="loc">
+            <option{% if not loc %} selected{% endif %} value="">所有區域</option>
+            {% for s in subareas %}{% if loc == s.id %}
+            <option value="{{ s.id }}" selected>{{ s.name_eng }}</option>
+            {% else %}
+            <option value="{{ s.id }}">{{ s.name_eng }}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        {% if category.slug == 'r' %}
+        <div class="form-group">
+          <select class="form-control" name="avail">
+            <option{% if not avail %} selected{% endif %} value="">所有出租類型</option>
+            <option value="SR"{% if avail == 'SR' %} selected{% endif %}>單間出租</option>
+            <option value="WU"{% if avail == 'WU' %} selected{% endif %}>整套出租</option>
+            <option value="SH"{% if avail == 'SH' %} selected{% endif %}>床位/合租一間</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="form-control" name="struct">
+            <option{% if not struct %} selected{% endif %} value="">所有房型</option>
+            <option value="STU"{% if struct == 'STU' %} selected{% endif %}>統倉型 Studio</option>
+            <option value="APT"{% if struct == 'APT' %} selected{% endif %}>公寓型 Apt/Condo</option>
+            <option value="HOU"{% if struct == 'HOU' %} selected{% endif %}>獨立屋 House</option>
+            <option value="OTH"{% if struct == 'OTH' %} selected{% endif %}>其他型 Other</option>
+          </select>
+        </div>
+        {% endif %}
+        {% if category.slug == 's' %}
+	        <div class="form-group">
+	        	<select class="form-control" name="sc">
+	        		<option{% if not sc %} selected{% endif %} value="">所有物品分類</option>
+	        		{% for s in subcats %}
+	        		<option value="{{ s.id }}"{% if sc == s.id %} selected{% endif %}>{{ s.name_bg5 }}</option>
+	        		{% endfor %}
+	        	</select>
+	        </div>
+        {% endif %}
+        <span>{% if category.slug == 'r' %}最高租金{% else %}最高價{% endif %}:</span>
+        <div class="form-group">
+          <input type="text" size="8" class="form-control" placeholder="例:5000" name="hi"{% if hi %} value="{{ hi }}"{% endif %}>
+        </div>
+        <div class="checkbox">
+		    <label><input type="checkbox" name="pic"{% if pic == 'on' %} checked{% endif %}>有圖</label>
+	    </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="關鍵字" name="q"{% if q %} value="{{ q }}"{% endif %}>
+        </div>
+        <button type="submit" class="btn btn-default">篩選</button>
+	</form>
+</div>
+</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+	<h4 class="pull-right"><a href="#" id="toggleSearch" class="nodeco"><span class="label label-brown"><i class="fa fa-search"></i> 篩選</span></a>&nbsp;&nbsp;<a href="/upgrade" target="_blank" class="nodeco"><span class="label label-peach"><i class="fa fa-bullhorn"></i> 推廣</span></a></h4>
+	</div>
+	<br>
+</div>
+
+{% if not cur_page %}
+<p class="text-center">
+<br>
+<br>
+還沒有要找的消息...重新篩選或<a href="/{{ place.slug }}/post">免費發消息</a>
+</p>
+{% endif %}
+
+{% for o in cur_page.object_list %}
+	{% if forloop.first and not forloop.last %}
+		<div class="row">
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>{% if o.weight == 3 %}&nbsp;<span class="label label-danger">急</span>{% elif o.weight == 2 %}&nbsp;<span class="label label-warning">頂</span>{% else %}{% endif %}
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ place.slug }}/{{ category.slug }}/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+        </div>
+    {% elif forloop.first and forloop.last %}
+    	<div class="row">
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>{% if o.weight == 3 %}&nbsp;<span class="label label-danger">急</span>{% elif o.weight == 2 %}&nbsp;<span class="label label-warning">頂</span>{% else %}{% endif %}
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ place.slug }}/{{ category.slug }}/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+        </div>
+        </div>
+	{% elif forloop.last %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>{% if o.weight == 3 %}&nbsp;<span class="label label-danger">急</span>{% elif o.weight == 2 %}&nbsp;<span class="label label-warning">頂</span>{% else %}{% endif %}
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ place.slug }}/{{ category.slug }}/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+		</div>
+	{% elif forloop.counter|divisibleby:"2" and not forloop.counter|divisibleby:"4" %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>{% if o.weight == 3 %}&nbsp;<span class="label label-danger">急</span>{% elif o.weight == 2 %}&nbsp;<span class="label label-warning">頂</span>{% else %}{% endif %}
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ place.slug }}/{{ category.slug }}/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+		<div class="clearfix visible-sm"></div>
+	{% elif forloop.counter|divisibleby:"4" %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>{% if o.weight == 3 %}&nbsp;<span class="label label-danger">急</span>{% elif o.weight == 2 %}&nbsp;<span class="label label-warning">頂</span>{% else %}{% endif %}
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ place.slug }}/{{ category.slug }}/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+		</div>
+		<div class="row">
+	{% else %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>{% if o.weight == 3 %}&nbsp;<span class="label label-danger">急</span>{% elif o.weight == 2 %}&nbsp;<span class="label label-warning">頂</span>{% else %}{% endif %}
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ place.slug }}/{{ category.slug }}/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+	{% endif %}
+{% endfor %}
+
+{% if cur_page.paginator.num_pages > 1 %}
+<div class="row">
+<div class="col-xs-12 text-center">
+	<ul class="pagination text-center">
+	{% if cur_page.has_previous %}
+		<li>
+		<a href="?{% if not query_url %}{% else %}{{ query_url }}&amp;{% endif %}page=1">首頁</a>
+		</li>
+		<li><a href="?{% if not query_url %}{% else %}{{ query_url }}&amp;{% endif %}page={{ cur_page.previous_page_number }}">&laquo;上一頁</a></li>
+	{% endif %}
+	<li class="active">
+	<a href="#">{{ cur_page.number }}</a>
+	</li>
+	{% if cur_page.has_next %}
+		<li><a href="?{% if not query_url %}{% else %}{{ query_url }}&amp;{% endif %}page={{ cur_page.next_page_number }}">下一頁&raquo;</a></li>
+		<li>
+		<a href="?{% if not query_url %}{% else %}{{ query_url }}&amp;{% endif %}page={{ cur_page.paginator.num_pages }}">末頁</a>
+		</li>
+	{% endif %}
+	</ul>
+</div>
+</div>
+{% endif %}
+</div> <!-- end container -->
+
+{% endblock %}

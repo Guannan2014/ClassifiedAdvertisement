@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block pageTitle %}<title>發布成功</title>{% endblock %}
+{% block content %}
+<br>
+<div class="container">
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+<div class="alert alert-success"><strong>發布成功！</strong>感謝您的消息。審核通過後(通常24小時內)，您的信息將自動出現在我們的網站上。你可以返回城市主頁：<a href="/{{ place.slug }}" class="alert-link">{{ place.name_eng }}&nbsp;{{ place.name_bg5 }}</a></div>
+</div>
+</div>
+</div>
+{% endblock %}

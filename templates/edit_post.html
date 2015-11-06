@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block pageTitle %}<title>修改信息</title>{% endblock %}
+{% load bootstrap_tags %}
+{% block content %}
+<br>
+<div class="container">
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+	<div class="form-box">
+	<form action="" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form|as_bootstrap }}
+		<p><button type="submit" class="btn btn-primary">修改</button>&nbsp;<a href="/accounts/mp" role="button" class="btn btn-default">取消</a></p>
+		<p>確認修改即代表您已閱讀並同意我們的<a href="/terms" target="_blank">服務條款</a></p>
+	</form>
+	</div>
+</div>
+</div>
+</div>
+{% endblock %}

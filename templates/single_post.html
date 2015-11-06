@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block pageTitle %}<title>{{ post.title }} - 发布在900海里 - 海外华人生活信息平台</title>{% endblock %}
+{% load thumbnail %}
+{% block content %}
+<br>
+<div class="container white-bg">
+	<div class="row"><div class="post-title"><h3>{{ post.title }}{% if post.weight == 3 %}&nbsp;<span class="label label-danger">急</span>{% elif post.weight == 2 %}&nbsp;<span class="label label-warning">頂</span>{% endif %}</h3><p>編號:{{ id_prefix}}{{ post.id }}&nbsp;&nbsp;<i class="fa fa-calendar"></i> {{ post.created|date:"Y-m-d e" }}</p></div></div>
+	{% if post.picture1 %}
+	<div class="row post-detail-pic-bg">
+	<br>
+	<div class="col-xs-12">
+	<p class="text-center"><a href="{{ post.picture1.url }}" target="_blank"><img class="img-responsive" src="{{ post.picture1.url }}" alt="{{ post.title }}" /></a></p>
+	</div>
+	</div>
+	{% endif %}
+
+	<div class="row">
+		<div class="col-sm-8">
+			<h4><span class="label label-success">${{ post.price }}</span>{% if post.subarea %}&nbsp;<span class="label label-default">{{ post.subarea.name_eng }}</span>{% endif %}</h4>
+			{% if post.rent_out %}
+			<span>{% for k, v in house_dict.items %}{% if post.rent_out == k %}{{ v }}{% endif %}{% endfor %}</span>
+			{% endif %}
+			{% if post.structure %}
+			<span>,&nbsp;{% for k, v in house_dict.items %}{% if post.structure == k %}{{ v }}{% endif %}{% endfor %}</span>
+			{% endif %}
+			{% if post.total_rooms or post.total_rooms == 0 %}
+			<span>,&nbsp;{{ post.total_rooms }}{% if post.total_rooms >= 5 %}+{% endif %}臥{% endif %}{% if post.total_baths or post.total_baths == 0 %}{{ post.total_baths }}{% if post.total_baths >= 5 %}+{% endif %}浴{% endif %}
+			</span>
+			{% if post.address %}
+			<br><span>{{ post.address }}&nbsp;<a href="https://maps.google.com/maps?q={{ post.address }}" target="_blank">[<i class="fa fa-map-marker"></i>地圖]</a></span>
+			{% endif %}
+			{% if post.details %}
+			<div class="post-detail-description">
+			<p>{{ post.details|linebreaks }}</p>
+			</div>
+			{% endif %}
+		</div>
+		<div class="col-sm-4">
+		{% if post.contact_person %}<h4><i class="fa fa-user"></i> {{ post.contact_person }}</h4>{% endif %}
+		{% if post.phone %}<h4><i class="fa fa-phone"></i> {{ post.phone }}</h4>{% endif %}
+		{% if post.email %}<h4><i class="fa fa-envelope"></i> {{ post.email }}</h4>{% endif %}
+		{% if post.qq %}<h4>QQ: {{ post.qq }}</h4>{% endif %}
+		{% if post.weixin %}<h4>微信: {{ post.weixin }}</h4>{% endif %}
+		</div>
+	</div>
+
+	<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+			<div class="alert alert-danger text-center">
+			<h3><i class="fa fa-exclamation-triangle"></i> 爲避免受騙，請閱讀我們的<a href="/safety/" target="_blank" class="alert-link">安全提醒</a></h3>
+			</div>
+	</div>
+	</div>
+</div>
+{% endblock %}

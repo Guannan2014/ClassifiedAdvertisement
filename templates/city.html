@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+{% block pageTitle %}<title>900海里 - {{ cur_city.name_eng }}{{ cur_city.name_gbk }}华人生活信息网</title>{% endblock %}
+{% block metatags %}
+<meta name="description" content="900海里{{ cur_city.name_eng }}{{ cur_city.name_gbk }}华人生活信息网。搜索{{ cur_city.name_gbk }}租房、物品交易信息。免费发布信息。" />
+<meta name="keywords" content="{{ cur_city.name_eng }}华人, {{ cur_city.name_gbk}}华人, {{ cur_city.name_gbk }}租房, 华人租房, {{ cur_city.name_gbk}}二手货, {{ cur_city.name_gbk}}物品交易" />
+<meta name="author" content="900海里" />
+{% endblock %}
+{% block content %}
+<div class="container">
+<div class="row">
+<div class="col-xs-12">
+<h2><span class="label label-most-recent">最新租房信息</span></h2>
+</div> <!-- end col-->
+</div> <!-- end row-->
+{% if no_rent %}
+<br>
+<br>
+<p>
+最近沒有房源信息...<a href="/{{ request.session.cityslug }}/post">免費發信息</a>
+</p>
+<br>
+<br>
+{% endif %}
+{% for o in recent_rent %}
+	{% if forloop.first and not forloop.last %}
+		<div class="row">
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	        <div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/r/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+        </div>
+    {% elif forloop.first and forloop.last %}
+    	<div class="row">
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/r/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+        </div>
+        </div>
+	{% elif forloop.last %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/r/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+		</div>
+	{% elif forloop.counter|divisibleby:"2" and not forloop.counter|divisibleby:"4" %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/r/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+		<div class="clearfix visible-sm"></div>
+	{% elif forloop.counter|divisibleby:"4" %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/r/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+		</div>
+		<div class="row">
+	{% else %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/r/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+	{% endif %}
+{% endfor %}
+{% if not no_rent %}
+<div class="row">
+<div class="col-xs-12">
+	<h4 class="pull-right"><a class="more-posts" href="/{{ request.session.cityslug }}/r"><i class="fa fa-arrow-circle-o-right"></i>更多房源信息</a></h4>
+</div>
+</div>
+{% endif %}
+
+<div class="row">
+<div class="col-xs-12">
+<h2><span class="label label-most-recent">最新集市信息</span></h2>
+</div> <!-- end col-->
+</div> <!-- end row-->
+{% if no_sale %}
+<br>
+<br>
+<p>
+最近沒有集市信息...<a href="/{{ request.session.cityslug }}/post">免費發信息</a>
+</p>
+<br>
+<br>
+{% endif %}
+{% for o in recent_sale %}
+	{% if forloop.first and not forloop.last %}
+		<div class="row">
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/s/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+        </div>
+    {% elif forloop.first and forloop.last %}
+    	<div class="row">
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/s/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+        </div>
+        </div>
+	{% elif forloop.last %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/s/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+		</div>
+	{% elif forloop.counter|divisibleby:"2" and not forloop.counter|divisibleby:"4" %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/s/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+		<div class="clearfix visible-sm"></div>
+	{% elif forloop.counter|divisibleby:"4" %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/s/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+		</div>
+		<div class="row">
+	{% else %}
+		<div class="col-sm-6 col-md-3">
+			<div class="post-box">
+	        <div class="post-box-details">
+	        <span class="label label-success">${{ o.price }}</span>&nbsp;<span class="label label-default">{{ o.subarea.name_eng }}</span>
+	        </div>
+	    	<div class="post-box-title">
+	        <h4><a href="/{{ request.session.cityslug }}/s/{{ o.id }}" target="_blank">{{ o.title }}</a>{% if o.picture1 %}&nbsp;<i class="fa fa-camera-retro"></i>{% endif %}</h4>
+	        </div>
+        	</div>
+		</div>
+	{% endif %}
+{% endfor %}
+{% if not no_sale %}
+<div class="row">
+<div class="col-xs-12">
+	<h4 class="pull-right"><a class="more-posts" href="/{{ request.session.cityslug }}/s"><i class="fa fa-arrow-circle-o-right"></i>更多集市信息</a></h4>
+</div>
+</div>
+{% endif %}
+</div> <!-- end container -->
+{% endblock %}
